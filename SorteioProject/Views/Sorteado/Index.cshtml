@@ -1,0 +1,36 @@
+@model IEnumerable<Models.ViewModel.SorteioViewModel>
+
+<h2>Pessoas Sorteadas</h2>
+
+<!-- Tabela para Sorteados -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data do Sorteio</th>
+            <th>Status de Presença</th> 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sorteado in Model)
+        {
+            <tr>
+                <td>@sorteado.NomeParticipante</td>
+                <td>@sorteado.DataSorteio.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    @if (sorteado.StatusPresenca.HasValue)
+                    {
+                        <span class="@(sorteado.StatusPresenca.Value ? "presente" : "ausente")">
+                            @(sorteado.StatusPresenca.Value ? "Presente" : "Ausente")
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="nao-registrado">Não Registrado</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

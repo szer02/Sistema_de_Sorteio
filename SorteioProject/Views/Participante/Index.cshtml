@@ -1,0 +1,17 @@
+@model IEnumerable<Models.ViewModel.ParticipanteViewModel>
+
+<h2>Participantes</h2>
+
+<form asp-action="UploadCsv" method="post" enctype="multipart/form-data" class="mb-3">
+    <div class="form-group">
+        <input type="file" name="file" class="form-control" required />
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Upload CSV</button>
+</form>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensagem"]</div>
+}
+

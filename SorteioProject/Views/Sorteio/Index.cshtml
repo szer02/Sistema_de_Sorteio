@@ -1,0 +1,54 @@
+@model IEnumerable<Models.ViewModel.ParticipanteViewModel>
+
+<h2>Sorteio</h2>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensagem"]</div>
+}
+
+<form asp-action="Sortear" method="post" id="sorteioForm">
+    <button type="submit" class="btn btn-primary" @(Model.Any() ? "" : "disabled")>Sortear</button> <!-- Desabilita o botão se não houver participantes -->
+</form>
+
+<!-- Modal -->
+@if (ViewData["NomeParticipante"] != null)
+{
+    <div class="modal fade show" id="resultadoModal" tabindex="-1" role="dialog" aria-labelledby="resultadoModalLabel" aria-hidden="true" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resultadoModalLabel">Resultado do Sorteio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Participante Sorteado: <span>@ViewData["NomeParticipante"]</span></p>
+                    <p>Data do Sorteio: <span>@ViewData["DataSorteio"]</span></p>
+                    <form asp-action="RegistrarPresenca" method="post">
+                        <input type="hidden" name="IdParticipante" value="@ViewData["IdParticipante"]" />
+                        <button type="submit" name="presenca" value="true" class="btn btn-success">Presente</button>
+                        <button type="submit" name="presenca" value="false" class="btn btn-danger">Ausente</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var participante in Model)
+        {
+            <tr>
+                <td>@participante.Nome</td>
+            </tr>
+        }
+    </tbody>
+</table>
